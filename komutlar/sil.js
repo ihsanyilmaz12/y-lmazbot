@@ -1,36 +1,14 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
+exports.run = function(client, message, args) {
 
-module.exports.run = async (bot, message, args) => {
-		const sayi1 = args.limit;
-		const sayi  = Number(sayi1);
-		if (sayi < 2) return msg.channel.send(`${this.client.emojis.get('505727432653799427')} En az 2 mesaj silebilirim.`);
-		if (sayi > 100) return msg.channel.send(`${this.client.emojis.get('505727433262235648')} En fazla 100 mesaj silebilirim.`);
-		if (sayi < 100) {
-			msg.channel.send(sayi + ' adet mesaj sorgulanıyor...').then(smsg => {
-				msg.channel.fetchMessages({limit: parseInt(sayi) + 2}).then(messages => {
-					smsg.edit(parseInt(messages.size) - 2 + ' adet mesaj bulundu. Bulunan mesajlar siliniyor...').then(bmsg => {
-						msg.channel.bulkDelete(messages.size, true).then(deletedMessages => {
-							if (deletedMessages.size < 1) return bmsg.edit(`${this.client.emojis.get('505727432653799427')} Hiç mesaj silinemedi. _(Tahminen 14 günden daha eski mesajlar var ise bundan dolayı mesajlar silinememiş olabilir.)_`).then(msg => msg.delete(3000));
-							const mesajadet = parseInt(deletedMessages.size) - 2;
-							msg.channel.send(`${this.client.emojis.get('505727433702506509')}` + mesajadet + ' adet mesaj silindi!').then(msg => msg.delete(3000));	
-						})
-					})
-				});
-			});
-		} else {
-			msg.channel.send(sayi + ' adet mesaj sorgulanıyor...').then(smsg => {
-				msg.channel.fetchMessages({limit: parseInt(sayi)}).then(messages => {
-					smsg.edit(parseInt(messages.size) + ' adet mesaj bulundu. Bulunan mesajlar siliniyor...').then(bmsg => {
-						msg.channel.bulkDelete(messages.size, true).then(deletedMessages => {
-							if (deletedMessages.size < 1) return bmsg.edit(`${this.client.emojis.get('505727432653799427')} Hiç mesaj silinemedi. _(Tahminen 14 günden daha eski mesajlar var ise bundan dolayı mesajlar silinememiş olabilir.)_`).then(msg => msg.delete(3000));
-							const mesajadet = parseInt(deletedMessages.size);
-							msg.channel.send(`${this.client.emojis.get('505727433702506509')}` + mesajadet + ' adet mesaj silindi!').then(msg => msg.delete(300));	
-						})
-					})
-				});
-			});
-		}
-	}
+  if (!message.guild) {
+    return message.author.send(':no_entry: Bu komutu kullanabilmek için botun "`Mesajları Yönet`" yetkisine sahip olması gerekli!');
+  }
+  let mesajsayisi = parseInt(args.join(' '));
+  if (mesajsayisi.length < 1) return message.channel.send(':no_entry: Lütfen silmek istediğiniz mesaj sayısını belirtin; `d!temizle 50` veya belirli bir kullanıcının mesajlarını silmek için o kullanıcıyı etiketleyin; `d!temizle @DesertHawk`')
+  if (mesajsayisi > 100) return message.channel.send(':no_entry: Lütfen `2` ile `100` arasında bir sayı girin. Eğer belirli bir kişinin mesajlarını silmek istiyorsanız o kişiyi etiketleyebilirsiniz; `d!temizle @DesertHawk `');
+  message.channel.bulkDelete(mesajsayisi + 1);
+  message.channel.send(mesajsayisi +' adet mesaj sildim!')
 };
 
 exports.conf = {

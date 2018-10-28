@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 exports.run = function(client, message, args) {
     let guild = message.guild
     let mesaj = args.slice(0).join(' ');
-    if (mesaj.length < 1) return message.channel.send(':no_entry: Kac Mesaj Silmek Istiyorsunuz?`');
+    if (mesaj.length < 1) return message.channel.send(':no_entry: Kac Mesaj Silmek Istiyorsunuz ?');
     let temizle = guild.channels.find('name', 'mesaj-sil-log');
 	if (!temizle) return message.reply('`log` kanalını bulamıyorum.');
     if (!message.guild) {

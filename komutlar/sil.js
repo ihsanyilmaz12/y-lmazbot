@@ -17,7 +17,7 @@ exports.run = function(client, message, args) {
   .setFooter('©️ Yılmaz BOT', client.user.avatarURL)
   .setTimestamp()
   .setThumbnail("https://resmim.net/f/BNdmUM.png");
-  client.channels.get('493311136217694238').send(embed);
+  client.channels.get('506153283962929152').send(embed);
 };
 
 exports.conf = {

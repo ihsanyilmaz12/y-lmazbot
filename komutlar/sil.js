@@ -1,44 +1,21 @@
 const Discord = require('discord.js');
-
-
 exports.run = function(client, message, args) {
-    let guild = message.guild
-    let mesaj = args.slice(0).join(' ');
-    if (mesaj.length < 1) return message.channel.send(':no_entry: Kac Mesaj Silmek Istiyorsunuz ?');
-    let temizle = guild.channels.find('name', 'mesaj-sil-log');
-	if (!temizle) return message.reply('`log` kanalını bulamıyorum.');
-    if (!message.guild) {
-        const ozelmesajuyari = new Discord.RichEmbed()
-        .setColor('RANDOM')
-        .setTimestamp()
-        .setAuthor(message.author.username, message.author.avatarURL)
-        .addField('`temizle` adlı komutu özel mesajlarda kullanamazsın.')
-        return message.author.send(ozelmesajuyari); }
-        if (!message.guild.member(client.user).hasPermission("MANAGE_MESSAGES")) {
-          const botunmesajyonet = new Discord.RichEmbed()
-          .setColor('RANDOM')
-          .setTimestamp()
-          .setAuthor(message.author.username, message.author.avatarURL)
-          .addField(':warning: Uyarı :warning:', 'Mesajları silebilmem için `Mesajları Yönet` yetkisine sahip olmalıyım.')
-          return message.author.send(botunmesajyonet);
-        }
-        let messagecount = parseInt(args.join(' '));
-        message.channel.fetchMessages({
-          limit: messagecount
-        }).then(messages => message.channel.bulkDelete(messages));
-          const sohbetsilindi = new Discord.RichEmbed()
-          .setColor("RANDOM")
-          .setTimestamp()
-          .addField('Eylem:', 'Sohbet silme')
-          .addField('Sildi Mesaj',  `${mesaj}`)
-          .addField('Yetkili:', message.author.username)
-          .addField('Sonuç:', `Başarılı`)
-          guild.channels.get(temizle.id).send(sohbetsilindi);
-          const sonuc = new Discord.RichEmbed()
-          .setColor("RANDOM")
-          .setDescription('Sohbet Temizlendi.')
-          message.channel.send(sonuc);
-          message.delete()
+
+  if (!message.guild) {
+    return message.author.send('`temizle` komutu sadece sunucularda kullanılabilir.');
+  }
+  let mesajsayisi = parseInt(args.join(' '));
+  if (mesajsayisi.length < 1) return message.channel.send('Kaç mesaj silmem gerektiğini belirtmedin.')
+  if (mesajsayisi > 100) return message.channel.send('100 adetden fazla mesaj silemem!');
+  message.channel.bulkDelete(mesajsayisi);
+    const sohbetsilindi = new Discord.RichEmbed()
+    .setColor(0x00AE86)
+    .setTimestamp()
+    .addField('Eylem:', 'Sohbet silme')
+    .addField('Yetkili:', message.author.username)
+    .addField('Silinen mesaj sayısı:', mesajsayisi)
+    return message.channel.sendEmbed(sohbetsilindi);
+    console.log("Sohbet " + message.member + " tarafından silindi!"); 
 };
 
 exports.conf = {

@@ -33,7 +33,7 @@ exports.conf = {
 };
 
 exports.help = {
-  name: 'hesap', 
+  name: 'hesapla', 
   description: 'Belirtilen işlemi yapar.',
   usage: 'hesapla <işlem>'
 };

@@ -22,11 +22,11 @@ const Discord = require('discord.js');
        .setFooter('Yılmaz BOT |', client.user.avatarURL)
        .setFooter("©️ Yılmaz BOT ", " ")
        .setTimestamp()
-       .addField(`**OYLAMA**`, `**${question}**`)).then(function(message) {
+       .addField(`**OYLAMA BAŞLATILDI**`, `**${question}**`)).then(function(message) {
 
-         message.react('484819931511128097');
+         message.react('505727433278750735');
 
-         message.react('484819931033108511');
+         message.react('505727432880291840');
 
        });
 };

@@ -59,7 +59,7 @@ module.exports.run = async (bot, message, args) => {
             .setTimestamp()
                 message.delete();
 
-            let warnchannel = message.guild.channels.find('name', "log");
+            let warnchannel = message.guild.channels.find('name', "uyarılanlar");
             if(!warnchannel) return message.reply(":warning: **`uyarılanlar`**`Adında Bir Kanal Göremiyorum Lütfen Kontrol Et!`");
 
 

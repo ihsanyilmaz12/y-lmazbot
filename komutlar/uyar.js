@@ -6,7 +6,6 @@ module.exports.run = async (bot, message, args) => {
 
             //başlangıç
 
-            if(!message.member.hasPermissions("MANAGE_MESSAGES")) return message.reply(":warning: `Bunu Yapmaya Yetkin Yok!`");
             let wUser = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0])
             if(!wUser) return message.reply(":warning: `Lütfen Uyarmak İstediğin Kullanıcınında İsmini Yaz`");
             if(wUser.hasPermissions("MANAGE_MESSAGES")) return message.reply(":warning: `Bu Kullanıcıyı Uyaramazsın!`");

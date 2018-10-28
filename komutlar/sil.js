@@ -1,22 +1,14 @@
-const Discord = require('discord.js');
-exports.run = function(client, message, args) {
+const Discord = require("discord.js");
 
-  if (!message.guild) {
-    return message.author.send('`temizle` komutu sadece sunucularda kullanılabilir.');
-  }
-  let mesajsayisi = parseInt(args.join(' '));
-  if (mesajsayisi.length < 1) return message.channel.send('Kaç mesaj silmem gerektiğini belirtmedin.')
-  if (mesajsayisi > 100) return message.channel.send('100 adetden fazla mesaj silemem!');
-  message.channel.bulkDelete(mesajsayisi);
-    const sohbetsilindi = new Discord.RichEmbed()
-    .setColor(0x00AE86)
-    .setTimestamp()
-    .addField('Eylem:', 'Sohbet silme')
-    .addField('Yetkili:', message.author.username)
-    .addField('Silinen mesaj sayısı:', mesajsayisi)
-    return message.channel.sendEmbed(sohbetsilindi);
-    console.log("Sohbet " + message.member + " tarafından silindi!"); 
-};
+module.exports.run = async (bot, message, args) => {
+
+  if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("Hayır dostum!");
+  if(!args[0]) return message.channel.send("Lütfen bir numara belirtin.");
+  message.channel.bulkDelete(args[0]).then(() => {
+  message.channel.send(`Sohbette ${args[0]} mesaj silindi.`).then(msg => msg.delete(30000));
+});
+
+}
 
 exports.conf = {
   enabled: true,

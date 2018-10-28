@@ -8,7 +8,6 @@ const moment = require('moment');
 const connections = new Map();
 require('./util/eventLoader')(client);
 
-var prefix = '!';
 var prefix = ayarlar.prefix;
 
 const log = message => {
@@ -40,117 +39,6 @@ client.on('guildMemberRemove', member => {
   .setTimestamp()
   channel.sendEmbed(embed);
 });
-
-
-bot.on("message", message => {
-
-  const reklam = ["discord.gg/", "discord.gg"];
-  if (reklam.some(word => message.content.includes(word))) {
-    message.reply(":warning: Discord Sunucu Reklamı Yapma :warning:")
-    message.delete();
-  }
-});
-
-bot.on("message", message => {
-
-  const Hakaret = ["veled", "salak", "salağı", "velet"];
-  if (Hakaret.some(word => message.content.includes(word))) {
-    message.reply(":warning: Hakaret Etme :warning:")
-    message.delete();
-  }
-});
-
-bot.on("message", message => {
-
-  const kufur = ["amk", "aq", "amk", "amq", "sikik", "amcık", "göt", "sik", "oç", "orospu", "çocuğu", "piç"];
-  if (kufur.some(word => message.content.includes(word))) {
-    const embed = new Discord.RichEmbed()
-    message.reply(":warning: Küfür Etme :warning:")
-    message.delete();
-  }
-
-});
-
-bot.on("message", message => {
-
-  const youtube = ["https://www.youtube.com/channel/", "www.youtube.com/channel/"];
-  if (youtube.some(word => message.content.includes(word))) {
-    message.reply(":warning: Youtube Kanal Reklamı Yapma :warning:")
-    message.delete();
-  }
-
-});
-
-bot.on("message", message => {
-
-  const etiket = ["<@484708591694118914>", "@İhsan", "@İhsan#2315 ", " <@!484708591694118914> ", "@İhsanY"];
-  if (etiket.some(word => message.content.includes(word))) {
-    message.reply('İhsan meşgul ben senle ilgileyim...');
-    message.delete();
-  }
-});
-
-bot.on("message", message => {
-
-  const etiket = ["!emojiyazı"];
-  if (etiket.some(word => message.content.includes(word))) {
-    message.delete();
-  }
-});
-
-bot.on("message", message => {
-
-  const etiket = ["!at"];
-  if (etiket.some(word => message.content.includes(word))) {
-    message.delete();
-  }
-});
-
-bot.on("message", message => {
-
-  const etiket = ["!ban"];
-  if (etiket.some(word => message.content.includes(word))) {
-    message.delete();
-  }
-});
-
-client.on('message', msg => {
-  if (msg.content === '<@484708591694118914>') {
-    msg.reply('İhsan oyun oynuyor ben senle ilgileyim...');
-    msg.delete();
-  }
-});
-
-
-client.on('message', msg => {
-  if (msg.content === '@İhsanY') {
-    msg.reply('İhsan meşgul ben senle ilgileyim...');
-    msg.delete();
-  }
-});
-
-client.on('message', msg => {
-  if (msg.content === ' <@!484708591694118914> ') {
-    msg.reply('İhsan meşgul ben senle ilgileyim...');
-    msg.delete();
-  }
-});
-
-client.on('message', msg => {
-  if (msg.content === '@İhsan#2315 ') {
-    msg.reply('İhsan meşgul ben senle ilgileyim...');
-    msg.delete();
-  }
-});
-
-
-client.on('message', msg => {
-  if (msg.content === '<@!484708591694118914>') {
-    msg.reply('İhsan meşgul ben senle ilgileyim...');
-    msg.delete();
-  }
-});
-
 
 client.commands = new Discord.Collection();
 client.aliases = new Discord.Collection();
@@ -264,5 +152,5 @@ client.on('error', e => {
   console.log(chalk.bgRed(e.replace(regToken, 'that was redacted')));
 });
 
-client.login(ayarlar.token);
-bot.login(ayarlar.token);
+client.login(process.env.BOT_TOKEN);
+bot.login(process.env.BOT_TOKEN);

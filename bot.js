@@ -14,6 +14,72 @@ const log = message => {
   console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
 };
 
+var random_color = [0xff0000, 0x008000, 0xffff00, 0x0000ff, 0xff8000];
+
+function r_r(random_color) {
+ return random_color[Math.floor((Math.random() * random_color.length))];
+}
+
+client.on("message", message => {
+  if (message.author.bot) return;
+  if (!points[message.author.id]) points[message.author.id] = {
+    points: 0,
+    level: 0
+  };
+  let userData = points[message.author.id];
+  userData.points++;
+
+  let curLevel = Math.floor(0.1 * Math.sqrt(userData.points));
+  if (curLevel > userData.level) {
+    // Level up!
+    userData.level = curLevel;
+    message.channel.send({embed: {
+      color: r_r(random_color),
+      author: {
+        name: message.author.username,
+        icon_url: message.author.avatarURL
+      },
+      fields: [{
+          name: "Seviye yükselişi :tada:",
+          value: `**Tebrikler ${message.author.username} Seviye atladın :clap: \nYeni levelin\`${userData.level}\` :computer:**`
+        }
+      ],
+      timestamp: new Date(),
+      footer: {
+        icon_url: message.author.avatarURL,
+        text: "Yılmaz BOT | Seviye Sistemi"
+      }
+    }
+   });
+  }
+
+  if (message.content.startsWith('!seviye')) {
+    message.channel.send({embed: {
+      color: r_r(random_color),
+      author: {
+        name: message.author.username,
+        icon_url: message.author.avatarURL
+      },
+      fields: [{
+          name: "Seviyen",
+          value: `**Şu anki levelin >\`${userData.level}\` :ribbon:\nŞu anki puanın >\`${userData.points}\` :ribbon: \n\nKolay gelsin :wave:**`
+        }
+      ],
+      timestamp: new Date(),
+      footer: {
+        icon_url: message.author.avatarURL,
+        text: "Yılmaz BOT | Seviye Sistemi"
+      }
+    }
+  });
+  }
+  fs.writeFile("./points.json", JSON.stringify(points), (err) => {
+    if (err) console.error(err)
+  });
+});
+
+let points = JSON.parse(fs.readFileSync("./points.json", "utf8"));
+
 client.on('guildMemberAdd', member => {
   const channel = member.guild.channels.find('name', '🎉hoşgeldiniz'); // burda ise kanalı belirleyelim hangi kanala atsın ben mod-log dedim.
   if (!channel) return;
